@@ -3,7 +3,6 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 
-
 const StockDashboard = () => {
   const [companies, setCompanies] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState(null);
@@ -49,67 +48,50 @@ const StockDashboard = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#F1F5F9' }}>
-      <div style={{ display: 'flex' }}>
-        <div style={{
-          width: '25%', minHeight: '100vh', backgroundColor: '#FFFFFF', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-          padding: '16px', overflowY: 'auto'
-        }}>
-          <h1 style={{ fontSize: '24px', fontWeight: '600', color: '#1F2937', marginBottom: '24px' }}>Companies</h1>
-          
+    <div className="min-h-screen bg-gray-100">
+      <div className="flex">
+        {/* Sidebar */}
+        <div className="w-1/4 min-h-screen bg-white shadow-md p-4 overflow-y-auto">
+          <h1 className="text-xl font-semibold text-gray-800 mb-6">Index</h1>
           {loading ? (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '128px' }}>
-              <div style={{
-                animation: 'spin 1s linear infinite', borderRadius: '50%', height: '32px', width: '32px', 
-                borderBottom: '4px solid #3B82F6'
-              }} />
+            <div className="flex justify-center items-center h-32">
+              <div className="h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
             </div>
           ) : (
-            <div style={{ marginBottom: '16px' }}>
+            <div>
               {companies.map((company, index) => (
                 <div
                   key={index}
                   onClick={() => setSelectedCompany(company)}
-                  style={{
-                    padding: '16px', borderRadius: '8px', cursor: 'pointer', transition: 'all 0.2s', 
-                    backgroundColor: selectedCompany === company ? '#E0F2FE' : '#F9FAFB', 
-                    borderLeft: selectedCompany === company ? '4px solid #3B82F6' : '4px solid transparent', 
-                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', marginBottom: '16px'
-                  }}
+                  className={`p-4 rounded-lg cursor-pointer transition ${
+                    selectedCompany === company 
+                      ? 'bg-blue-100 border-l-4 border-blue-500' 
+                      : 'bg-gray-50 hover:bg-gray-100'
+                  } shadow mb-4`}
                 >
-                  <div style={{ fontSize: '18px', fontWeight: '500', color: '#374151' }}>
-                    {company.index_name}
-                  </div>
-                  <div style={{ fontSize: '12px', color: '#6B7280', marginTop: '8px' }}>
-                    Date: {company.index_date}
-                  </div>
-                  <div style={{
-                    fontSize: '12px', marginTop: '8px', color: parseFloat(company.change_percent) >= 0 ? '#16A34A' : '#DC2626'
-                  }}>
+                  <div className="text-lg font-medium text-gray-800">{company.index_name}</div>
+                  <div className="text-sm text-gray-600 mt-2">Date: {company.index_date}</div>
+                  <div className={`text-sm mt-2 font-semibold ${
+                    parseFloat(company.change_percent) >= 0 ? 'text-green-600' : 'text-red-600'
+                  }`}>
                     {company.change_percent}% Change
                   </div>
                 </div>
               ))}
-              
-              <div style={{ position: 'sticky', bottom: '0', backgroundColor: '#FFFFFF', paddingTop: '16px', borderTop: '1px solid #E5E7EB' }}>
-                <div style={{ display: 'flex', gap: '8px' }}>
+              <div className="sticky bottom-0 bg-white pt-4 border-t border-gray-200">
+                <div className="flex gap-2">
                   <button
-                    onClick={() => setPage(p => Math.max(1, p - 1))}
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
                     disabled={page === 1}
-                    style={{
-                      flex: '1', padding: '8px 16px', backgroundColor: '#3B82F6', color: '#FFFFFF', borderRadius: '8px',
-                      cursor: page === 1 ? 'not-allowed' : 'pointer', opacity: page === 1 ? '0.6' : '1', 
-                      transition: 'background-color 0.3s', fontSize: '14px'
-                    }}
+                    className={`flex-1 px-4 py-2 rounded-lg bg-blue-500 text-white text-sm transition ${
+                      page === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
+                    }`}
                   >
                     Previous
                   </button>
                   <button
-                    onClick={() => setPage(p => p + 1)}
-                    style={{
-                      flex: '1', padding: '8px 16px', backgroundColor: '#3B82F6', color: '#FFFFFF', borderRadius: '8px', 
-                      cursor: 'pointer', transition: 'background-color 0.3s', fontSize: '14px'
-                    }}
+                    onClick={() => setPage((p) => p + 1)}
+                    className="flex-1 px-4 py-2 rounded-lg bg-blue-500 text-white text-sm hover:bg-blue-600 transition"
                   >
                     Next
                   </button>
@@ -119,46 +101,41 @@ const StockDashboard = () => {
           )}
         </div>
 
-        <div style={{
-          flex: '1', padding: '24px', overflowY: 'auto'
-        }}>
+        {/* Main Content */}
+        <div className="flex-1 p-6 overflow-y-auto">
           {selectedCompany ? (
-            <div style={{ marginBottom: '24px' }}>
-              <div style={{
-                backgroundColor: '#FFFFFF', borderRadius: '16px', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)', padding: '24px', marginBottom: '24px'
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+            <div>
+              {/* Company Details */}
+              <div className="bg-white rounded-xl shadow-md p-6 mb-6">
+                <div className="flex justify-between items-center mb-6">
                   <div>
-                    <h2 style={{ fontSize: '24px', fontWeight: '600', color: '#374151' }}>
-                      {selectedCompany.index_name}
-                    </h2>
-                    <p style={{ color: '#6B7280' }}>
-                      {selectedCompany.index_date}
-                    </p>
+                    <h2 className="text-2xl font-semibold text-gray-800">{selectedCompany.index_name}</h2>
+                    <p className="text-gray-600">{selectedCompany.index_date}</p>
                   </div>
-                  <div style={{
-                    fontSize: '28px', fontWeight: '600', color: parseFloat(selectedCompany.change_percent) >= 0 ? '#16A34A' : '#DC2626'
-                  }}>
+                  <div className={`text-2xl font-semibold ${
+                    parseFloat(selectedCompany.change_percent) >= 0 ? 'text-green-600' : 'text-red-600'
+                  }`}>
                     {selectedCompany.change_percent}%
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px', marginBottom: '24px' }}>
+                {/* Index Details */}
+                <div className="grid grid-cols-2 gap-6 mb-6">
                   {['Open', 'High', 'Low', 'Close'].map((item, idx) => (
-                    <div key={idx} style={{
-                      padding: '16px', backgroundColor: '#F9FAFB', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
-                    }}>
-                      <div style={{ fontSize: '12px', color: '#6B7280' }}>{item}</div>
-                      <div style={{
-                        fontSize: '20px', fontWeight: '600', color: '#111827'
-                      }}>
+                    <div
+                      key={idx}
+                      className="p-4 bg-gray-50 rounded-lg shadow-md"
+                    >
+                      <div className="text-sm text-gray-600">{item}</div>
+                      <div className="text-xl font-semibold text-gray-800">
                         {formatNumber(selectedCompany[`${item.toLowerCase()}_index_value`])}
                       </div>
                     </div>
                   ))}
                 </div>
 
-                <div style={{ height: '400px' }}>
+                {/* Chart */}
+                <div className="h-96">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={prepareChartData(selectedCompany)}>
                       <CartesianGrid strokeDasharray="3 3" />
@@ -175,7 +152,7 @@ const StockDashboard = () => {
                 </div>
               </div>
 
-
+              {/* Additional Details */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
                 {['Volume', 'Turnover (₹ Cr)', 'Points Change'].map((item, idx) => (
                   <div key={idx} style={{
@@ -191,11 +168,10 @@ const StockDashboard = () => {
                   </div>
                 ))}
               </div>
+
             </div>
           ) : (
-            <div style={{
-              display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: '#6B7280', fontSize: '18px'
-            }}>
+            <div className="flex justify-center items-center h-full text-gray-500 text-lg">
               Select a company from the left to view details
             </div>
           )}
