@@ -106,7 +106,7 @@ const StockDashboard = () => {
           {selectedCompany ? (
             <div>
               {/* Company Details */}
-              <div className="bg-white rounded-xl shadow-md p-6 mb-6">
+              <div className="bg-grey rounded-xl shadow-md p-6 mb-6">
                 <div className="flex justify-between items-center mb-6">
                   <div>
                     <h2 className="text-2xl font-semibold text-gray-800">{selectedCompany.index_name}</h2>
@@ -121,17 +121,19 @@ const StockDashboard = () => {
 
                 {/* Index Details */}
                 <div className="grid grid-cols-2 gap-6 mb-6">
-                  {['Open', 'High', 'Low', 'Close'].map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="p-4 bg-gray-50 rounded-lg shadow-md"
-                    >
-                      <div className="text-sm text-gray-600">{item}</div>
-                      <div className="text-xl font-semibold text-gray-800">
-                        {formatNumber(selectedCompany[`${item.toLowerCase()}_index_value`])}
-                      </div>
-                    </div>
-                  ))}
+                {['Open', 'High', 'Low', 'Close'].map((item, idx) => {
+                const key =
+                 item === 'Close' ? 'closing_index_value' : `${item.toLowerCase()}_index_value`;
+                   return (
+                 <div key={idx} className="p-4 bg-gray-50 rounded-lg shadow-md">
+                <div className="text-sm text-gray-600">{item}</div>
+                <div className="text-xl font-semibold text-gray-800">
+                {formatNumber(selectedCompany[key])}
+                </div>
+                </div>
+                );  
+                })}
+
                 </div>
 
                 {/* Chart */}
@@ -154,20 +156,25 @@ const StockDashboard = () => {
 
               {/* Additional Details */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
-                {['Volume', 'Turnover (₹ Cr)', 'Points Change'].map((item, idx) => (
-                  <div key={idx} style={{
-                    backgroundColor: '#FFFFFF', borderRadius: '16px', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)', padding: '24px'
-                  }}>
-                    <h3 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '16px' }}>{item}</h3>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ fontSize: '14px', color: '#6B7280' }}>{item}</span>
-                      <span style={{ fontSize: '18px', fontWeight: '600', color: '#111827' }}>
-                        {formatNumber(selectedCompany[item.toLowerCase().replace(/ /g, '_')])}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+              {[
+              { label: 'Volume ', key: 'volume' },
+              { label: 'Turnover (₹ Cr)', key: 'turnover_rs_cr' },
+              { label: 'Points Change', key: 'points_change' }
+              ].map((item, idx) => (
+              <div key={idx} style={{
+              backgroundColor: '#FFFFFF', borderRadius: '16px', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)', padding: '24px'
+              }}>
+              <h3 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '16px' }}>{item.label}</h3>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '14px', color: '#6B7280' }}>{item.label}</span>
+              <span style={{ fontSize: '18px', fontWeight: '600', color: '#111827' }}>
+              {formatNumber(selectedCompany[item.key])}
+              </span>
               </div>
+              </div>
+              ))}
+            </div>
+
 
             </div>
           ) : (
