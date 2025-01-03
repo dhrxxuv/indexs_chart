@@ -50,7 +50,7 @@ const StockDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="flex">
-        {/* Sidebar */}
+   
         <div className="w-1/4 min-h-screen bg-white shadow-md p-4 overflow-y-auto">
           <h1 className="text-xl font-semibold text-gray-800 mb-6">Index</h1>
           {loading ? (
@@ -101,11 +101,10 @@ const StockDashboard = () => {
           )}
         </div>
 
-        {/* Main Content */}
         <div className="flex-1 p-6 overflow-y-auto">
           {selectedCompany ? (
             <div>
-              {/* Company Details */}
+   
               <div className="bg-grey rounded-xl shadow-md p-6 mb-6">
                 <div className="flex justify-between items-center mb-6">
                   <div>
@@ -119,7 +118,7 @@ const StockDashboard = () => {
                   </div>
                 </div>
 
-                {/* Index Details */}
+      
                 <div className="grid grid-cols-2 gap-6 mb-6">
                 {['Open', 'High', 'Low', 'Close'].map((item, idx) => {
                 const key =
@@ -136,7 +135,6 @@ const StockDashboard = () => {
 
                 </div>
 
-                {/* Chart */}
                 <div className="h-96">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={prepareChartData(selectedCompany)}>
@@ -149,12 +147,13 @@ const StockDashboard = () => {
                       <Line type="monotone" dataKey="High" stroke="#16a34a" strokeWidth={2} />
                       <Line type="monotone" dataKey="Low" stroke="#dc2626" strokeWidth={2} />
                       <Line type="monotone" dataKey="Close" stroke="#7c3aed" strokeWidth={2} />
+                      
                     </LineChart>
                   </ResponsiveContainer>
                 </div>
               </div>
 
-              {/* Additional Details */}
+           
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
               {[
               { label: 'Volume ', key: 'volume' },
