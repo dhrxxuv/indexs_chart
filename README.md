@@ -20,7 +20,8 @@ This project is a simple stock dashboard that fetches stock data from a CSV file
 
 ---
 
+![Screenshot 2025-01-02 152821](https://github.com/user-attachments/assets/8e5e6113-dcf0-4f8b-a552-c14e6e20d00a)
 
-![Screenshot 2025-01-02 110031](https://github.com/user-attachments/assets/9d8c8e6f-f935-4c4f-8f36-770ec87d17fa)
-![Screenshot 2025-01-02 110038](https://github.com/user-attachments/assets/e728dbc3-3919-4a8c-9794-91e53ac04b29)
-![Screenshot 2025-01-02 110044](https://github.com/user-attachments/assets/c5355fd0-04b3-4c3f-b000-46cc9c7639e6)
+![Screenshot 2025-01-02 152806](https://github.com/user-attachments/assets/e520861b-1804-4273-9f4b-5c7ef89612f0)
+
+![Screenshot 2025-01-02 152757](https://github.com/user-attachments/assets/61c16725-d0a9-43a5-b267-77b48fceaa33)
